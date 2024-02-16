@@ -27,7 +27,7 @@ public class UnitTest1
     {
         var result = Types.InAssembly(typeof(ProductDto).Assembly)
             .That()
-            .HaveName("ProductDto")
+            .HaveNameEndingWith("Dto")
             .Should()
             .BeRecord()
             .GetResult();
@@ -35,7 +35,6 @@ public class UnitTest1
         result.IsSuccessful.Should().BeTrue();
     }
 
-    // Domain namespace should not reference Infrastructure namespace
     [Fact]
     public void DomainShouldNotReferenceInfrastructure()
     {
