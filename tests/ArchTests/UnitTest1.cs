@@ -49,7 +49,7 @@ public class UnitTest1
     }
 
     [Fact]
-    public void EShopProjectShouldNotDependOnProjectsProjects()
+    public void EShopProjectShouldNotDependOnProjectsProject()
     {
         var result = Types.InAssembly(typeof(ProductDto).Assembly)
             .That()
