@@ -1,4 +1,10 @@
+using Projects;
 var builder = WebApplication.CreateBuilder(args);
+
+var user = new User();
+var user2 = new User();
+
+Console.WriteLine(user == user2);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

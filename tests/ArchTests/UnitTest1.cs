@@ -47,6 +47,19 @@ public class UnitTest1
 
         result.IsSuccessful.Should().BeTrue();
     }
+
+    [Fact]
+    public void EShopProjectShouldNotDependOnProjectsProjects()
+    {
+        var result = Types.InAssembly(typeof(ProductDto).Assembly)
+            .That()
+                .HaveName("Program")
+            .ShouldNot()
+                .HaveDependencyOnAssembly("Projects")
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue();
+    }
 }
 
 public class IsRecordRule : ICustomRule
@@ -59,4 +72,20 @@ public static class CustomRules
 {
     public static ConditionList BeRecord(this Conditions conditions)
         => conditions.MeetCustomRule(new IsRecordRule());
+
+    public static ConditionList HaveDependencyOnAssembly(this Conditions conditions, string assemblyName)
+       => conditions.MeetCustomRule(new DependencyOnAssemblyRule(assemblyName));
+}
+
+public class DependencyOnAssemblyRule : ICustomRule
+{
+    private readonly string _assemblyName;
+
+    public DependencyOnAssemblyRule(string assemblyName)
+    {
+        _assemblyName = assemblyName;
+    }
+
+    public bool MeetsRule(TypeDefinition type)
+        => type.Module.AssemblyReferences.Any(a => a.Name == _assemblyName);
 }
